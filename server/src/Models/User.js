@@ -5,21 +5,27 @@ const User = new Schema({
         type: Number,
         required: true
     },
-    local: {
-        username: {
-            type: String,
-            required: true,
-        },
-        email: {
-            type: String,
-            required: true,
-            unique: true
-        },
-        password: {
-            type:String,
-            required: true
-        },
+    username: {
+        type: String,
+        required: true,
+        unique: true,
     },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+    },
+    password: String,
+    created: {
+        type: Date,
+        default: Date.now,
+        required: true
+    },
+    updated: {
+        type: Date,
+        default: Date.now,
+        required: true
+    }
 })
 
 
