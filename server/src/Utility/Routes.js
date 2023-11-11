@@ -5,8 +5,9 @@ class Routes {
         this.setupRoutes();
     }
     setupRoutes() {
-        this.app.use("/", require('../Routes/HomeRoutes/index'));
-        this.app.use('/api/', require('../Routes/UserRoutes/index'));
+        this.app.use("/", require('../Routes/Home'));
+        this.app.use('/api/users', require('../Routes/User'));
+        this.app.use('/auth/', require('../Routes/Authentication'));
     }
 }
 module.exports = Routes;
