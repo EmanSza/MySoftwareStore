@@ -5,7 +5,6 @@ const deleteUserService = require('../Services/deleteUser');
 
 const UserRepository = require('../Repositories/UserRepository');
 const createUser = (req, res) => {
-    console.log(req.body)
     const { username, email, password } = req.body;
     if (!username || !email || !password) {
         return res.status(400).json({
@@ -27,37 +26,29 @@ const createUser = (req, res) => {
 }
 
 const fetchUser = (req, res) => {
-    if (!req.body.username) {
+    if (!req.params.params) {
         return res.status(400).json({
             message: "Invalid Request"
         })
     }
 
     // After validation, pass the data to the service
-    fetchUserService(req.body.username)
-        .then((result) => {
-            if (!result) {
-                return res.status(400).json({
-                    message: "User Not Found"
-                })
-            }
-            return res.status(200).json({
-                message: "User Found",
-                user: result
-            })
-        })
-        .catch((err) => {
-            return res.status(500).json({
-                message: "Internal Server Error",
-                error: err
-            })
-        })
+    let user = fetchUserService(req.params.id)
 
-
+    if (user) {
+        return res.status(200).json({
+            message: "User Found",
+            user: user
+        })
+    }
+    else {
+        return res.status(400).json({
+            message: "User Not Found"
+        })
+    }
     
 }
 const updateUser = (req, res) => {
-    console.log(req.params)
     if (!req.params.id) {
         return res.status(400).json({
             message: "Invalid Request"
@@ -114,7 +105,6 @@ const deleteUser = (req, res) => {
         
 }
 const listUsers = (req, res) => {
-    console.log(req.body)
     // Since this is a list, no validation is required so im not making a service for it though this is BAD PRACTICE
     const UserRepo = new UserRepository();
     let user = UserRepo.findAll({}).then((users) => {
