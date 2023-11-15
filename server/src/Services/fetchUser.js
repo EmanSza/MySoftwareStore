@@ -1,7 +1,8 @@
 const UserRepository = require('../Repositories/UserRepository');
-module.exports = (userinfo) => {
+module.exports = (username) => {
+    console.log(username);
     const UserRepo = new UserRepository();
-    let usernameExist = UserRepo.findOne({ username: userinfo.username }, (err, user)).then((user) => {
+    let usernameExist = UserRepo.findOne({ username: username }).then((user) => {
         if (user) {
             return user;
         }

@@ -4,9 +4,7 @@ let router = express.Router();
 const userController = require('../Controllers/userController');
 
 
-router.get('/', function(req, res) {
-    res.send('List All Users');
-});
+router.get('/', userController.listUsers);
 
 router.post('/',  userController.createUser);
 

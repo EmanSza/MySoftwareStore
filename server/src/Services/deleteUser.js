@@ -1,13 +1,13 @@
 const UserRepository = require('../Repositories/UserRepository');
 const checkUserExist = require('./checkUserExist');
-module.exports = (userinfo) => {
-    let user = checkUserExist(userinfo);
+module.exports = (username) => {
+    let user = checkUserExist(username);
     if (!user) {
         return false;
     }
 
     const UserRepo = new UserRepository();
-    user = UserRepo.delete(userinfo);
+    user = UserRepo.delete(username);
     if (user) {
         return true;
     }

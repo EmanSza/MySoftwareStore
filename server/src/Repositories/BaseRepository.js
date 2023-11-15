@@ -5,6 +5,7 @@ class BaseRepository {
         this.model = model;
     }
     findOne(data) {
+
        return this.model.findOne(data).then((result) => {
             return result;
        });
@@ -15,20 +16,17 @@ class BaseRepository {
         });
     }
     create(data) {
+        console.log(data)
         return this.model.create(data);
     }
-    update(id, data) {
-        return this.model.updateOne({ _id: id }, data).then((data) => {
+    update(username, data) {
+        console.log(username, data)
+        return this.model.updateOne({ username: username }, data).then((data) => {
             return data;
         });
     }
-    delete(id) {
-        return this.model.deleteOne({ _id: id }).then((data) => {
-            return data;
-        });
-    }
-    updateOne (id, data) {
-        return this.model.updateOne({ _id: id }, data).then((data) => {
+    delete(username) {
+        return this.model.deleteOne({ username: username}).then((data) => {
             return data;
         });
     }

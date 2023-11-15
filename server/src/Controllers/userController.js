@@ -5,35 +5,27 @@ const deleteUserService = require('../Services/deleteUser');
 
 const UserRepository = require('../Repositories/UserRepository');
 const createUser = (req, res) => {
+    console.log(req.body)
     const { username, email, password } = req.body;
     if (!username || !email || !password) {
         return res.status(400).json({
             message: "Invalid Request"
         })
     }
-
     // After validation, pass the data to the service
-    userCreateService(username, email, password)
-        .then((result) => {
-            if (!result) {
-                return res.status(400).json({
-                    message: "User Already Exists"
-                })
-            }
-            return res.status(201).json({
-                message: "User Created Successfully",
-                user: result
-            })
+    let userStatus = userCreateService({username, email, password})
+    if (userStatus) {
+        return res.status(200).json({
+            message: "User Created"
         })
-        .catch((err) => {
-            return res.status(500).json({
-                message: "Internal Server Error",
-                error: err
-            })
+    } else {
+        return res.status(400).json({
+            message: "User Already Exists"
         })
-    
-
+    }
+        
 }
+
 const fetchUser = (req, res) => {
     if (!req.body.username) {
         return res.status(400).json({
@@ -65,64 +57,67 @@ const fetchUser = (req, res) => {
     
 }
 const updateUser = (req, res) => {
-    if (!req.body.username) {
+    console.log(req.params)
+    if (!req.params.id) {
+        return res.status(400).json({
+            message: "Invalid Request"
+        })
+    }
+    if (!req.body) {
         return res.status(400).json({
             message: "Invalid Request"
         })
     }
 
+    let data = {
+        username: req.params.id,
+        data: req.body
+    }
+
     // After validation, pass the data to the service
-    updateUserService(req.body.username)
-        .then((result) => {
-            if (!result) {
-                return res.status(400).json({
-                    message: "User Not Found"
-                })
-            }
-            return res.status(200).json({
-                message: "User Found",
-                user: result
-            })
+    let user = updateUserService(data)
+
+    if (user) {
+        return res.status(200).json({
+            message: "User Updated",
+            user: user
         })
-        .catch((err) => {
-            return res.status(500).json({
-                message: "Internal Server Error",
-                error: err
-            })
+    }
+    else {
+        return res.status(400).json({
+            message: "User Not Found"
         })
+    }
+
+        
     
 }
 const deleteUser = (req, res) => {
-    if (!req.body.username) {
+    if (!req.params.id) {
         return res.status(400).json({
             message: "Invalid Request"
         })
     }
 
     // After validation, pass the data to the service
-    deleteUserService(req.body.username)
-        .then((result) => {
-            if (!result) {
-                return res.status(400).json({
-                    message: "User Not Found"
-                })
-            }
-            return res.status(200).json({
-                message: "User Found",
-                user: result
-            })
+    let user = deleteUserService(req.body.username)
+    if (user) {
+        return res.status(200).json({
+            message: "User Deleted"
         })
-        .catch((err) => {
-            return res.status(500).json({
-                message: "Internal Server Error",
-                error: err
-            })
+    }
+    else {
+        return res.status(400).json({
+            message: "User Not Found"
         })
+    }
+        
 }
 const listUsers = (req, res) => {
+    console.log(req.body)
     // Since this is a list, no validation is required so im not making a service for it though this is BAD PRACTICE
     const UserRepo = new UserRepository();
-    UserRepo.find({}, (err, users)).then((users) => {
+    let user = UserRepo.findAll({}).then((users) => {
         if (!users) {
             return res.status(400).json({
                 message: "No Users Found"
@@ -138,7 +133,8 @@ const listUsers = (req, res) => {
             error: err
         })
     })
-    
+    return user;
+
     
 }
 const userController = {
