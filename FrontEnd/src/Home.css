@@ -1,0 +1,13 @@
+.home {
+    padding: 50px;
+    background-color: #f8f9fa;
+}
+
+.home h1 {
+    color: #333;
+    margin-bottom: 30px;
+}
+.home img {
+    max-width: 100px; /* Set the width you prefer */
+    height: auto; /* Keep the aspect ratio */
+}
