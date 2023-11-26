@@ -1,4 +1,4 @@
-const UserRepository = require('../Repositories/UserRepository');
+const UserRepository = require('../../Repositories/UserRepository');
 const checkUserExist = require('./checkUserExist');
 module.exports = (username) => {
     let user = checkUserExist(username);

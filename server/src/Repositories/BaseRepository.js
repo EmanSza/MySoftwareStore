@@ -15,8 +15,12 @@ class BaseRepository {
             return data;
         });
     }
-    create(data) {
-        console.log(data)
+    create(username, email, password) {
+        let data = {
+            username: username,
+            email: email,
+            password: password
+        }
         return this.model.create(data);
     }
     update(username, data) {

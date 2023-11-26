@@ -1,9 +1,10 @@
-const userCreateService = require('../Services/UserCreateService');
-const fetchUserService = require('../Services/fetchUser');
-const updateUserService = require('../Services/updateUser');
-const deleteUserService = require('../Services/deleteUser');
+const userCreateService = require('../Services/UserServices/UserCreateService');
+const fetchUserService = require('../Services/UserServices/fetchUser');
+const updateUserService = require('../Services/UserServices/updateUser');
+const deleteUserService = require('../Services/UserServices/deleteUser');
 
 const UserRepository = require('../Repositories/UserRepository');
+
 const createUser = (req, res) => {
     const { username, email, password } = req.body;
     if (!username || !email || !password) {
