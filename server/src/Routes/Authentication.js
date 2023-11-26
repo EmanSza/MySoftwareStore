@@ -1,11 +1,11 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const AuthMiddle = require('../Middleware/AuthMiddleware');
+const authController = require('../Controllers/authController');
 
+router.post('/signin', authController.signin(req, res));
 
-router.post('/signin', function(req, res) {
-    res.send('Sign in the User');
-});
-router.get('/signout', function(req, res) {
+router.get('/signout', AuthMiddle, function(req, res) {
     res.send('Sign out the User');
 });
 
