@@ -8,11 +8,13 @@ export const Login =(props) =>{
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            // Axios call moved inside the handleSubmit function
             const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth/signin`, { email, password });
-            console.log(response); // Logging the response for now, handle the token saving and redirecting here
+            // Save the received token to local storage or in-app context/state
+            localStorage.setItem('token', response.data.token);
+            // Redirect the user to another page or dashboard in the future
         } catch (error) {
-            console.error(error); // Handle errors, e.g., show an error message to the user
+            console.error("Login Error: ", error.response.data);
+            // Handle errors
         }
     };
     return(
