@@ -1,13 +1,22 @@
 import React,{useState} from "react";
 import './Login.css'; // Specific CSS
+import axios from 'axios';//Axios to post login
 export const Login =(props) =>{
     const[email, setEmail] = useState('');
     const[password, setPassword] = useState('');
-    const handleSubmit = (event) => {
+    //Prevent by default but edited so that it logs it redirect logging dont work
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(email, password);
+        try {
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth/signin`, { email, password });
+            // Save the received token to local storage or in-app context/state
+            localStorage.setItem('token', response.data.token);
+            // Redirect the user to another page or dashboard in the future
+        } catch (error) {
+            console.error("Login Error: ", error.response.data);
+            // Handle errors
+        }
     };
-
     return(
         <div className= "auth-form">
             <form onSubmit={handleSubmit}>
