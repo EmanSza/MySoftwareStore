@@ -8,7 +8,7 @@ export const Register =(props) =>{
     const handleRegister = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/users/register`, {
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/users`, {
                 username,
                 email,
                 password,
