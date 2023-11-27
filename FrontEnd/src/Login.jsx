@@ -8,7 +8,7 @@ export const Login =(props) =>{
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth/signin`, { email, password });
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth/users`, { email, password });
             // Save the received token to local storage or in-app context/state
             localStorage.setItem('token', response.data.token);
             // Redirect the user to another page or dashboard in the future
