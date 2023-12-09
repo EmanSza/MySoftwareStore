@@ -1,5 +1,8 @@
 // We Use this just in case we ever change the database we use.
 // Makes it easier to change the database we use.
+
+// TODO:
+// I was stupid and created some things based on UserRepo Will begin moving them over
 class BaseRepository {
     constructor(model) {
         this.model = model;
@@ -15,22 +18,11 @@ class BaseRepository {
             return data;
         });
     }
-    create(username, email, password) {
-        let data = {
-            username: username,
-            email: email,
-            password: password
-        }
+    create(data) {
         return this.model.create(data);
     }
-    update(username, data) {
-        console.log(username, data)
-        return this.model.updateOne({ username: username }, data).then((data) => {
-            return data;
-        });
-    }
-    delete(username) {
-        return this.model.deleteOne({ username: username}).then((data) => {
+    delete(data) {
+        return this.model.deleteOne(data).then((data) => {
             return data;
         });
     }
